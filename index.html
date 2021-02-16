@@ -1,0 +1,244 @@
+<html>
+	<head>
+		<title>States of India</title>
+		<link rel="stylesheet" href="src/bootstrap/bootstrap.min.css"/>
+		<link rel="icon" href="src/img/favico.png"/>
+		<style>
+			@font-face {
+				font-family: kgHappy;
+				src: url(src/fonts/KgHappySolid.ttf);
+			}
+			*{
+				box-sizing: border-box !important;
+			}
+			html{
+				font-size: 100%;
+			}
+			header{
+				padding: 15px 25px;
+			}
+			#watermark{
+				position: fixed;
+				bottom: 10px;
+				right: 0;
+				border-radius: 500px 0 0 500px;
+				background-color: black;
+				padding: 3px 15px 3px 3px;
+				font-size: 12px;
+				box-shadow: 0 0 10px #3e00a0;
+				color: white;
+				z-index: 10000;
+			}
+			#watermark img{
+				width: 30px;
+				height: 30px;
+				object-fit: cover;
+				border-radius: 50%;
+			}
+			#watermark span{
+				padding-left: 5px;
+			}			
+			#flagHeader{
+				width: 60px !important;
+			}
+			.headerImg{
+				width: 450px;
+				height: 70px;
+				border-radius: 500px 0 0 500px;
+				position: fixed;
+				top : 5px;
+				right: 0;
+				border: 3px solid black;
+				box-shadow: 0 0 5px gray;
+			}
+			.alphaCard{
+				position: relative;
+				display: inline-flex;	
+				justify-content: center;
+				align-items: center;
+				width: 12rem;
+				height: 8rem;
+				font-size: 90px;
+				text-align: center;
+				font-family: kgHappy;
+				padding: 5px 10px;
+				color: white;
+				text-shadow: 0 0 5px black;
+				margin: 2px; 
+				border-radius: 3px;
+				cursor: pointer;
+				transition: 0.25s;
+				/*opacity: 0.75;*/
+			}
+			.alphaCardHover:hover{
+				/*opacity: 1;*/
+				/*filter: invert(1);*/
+				width: 18rem;
+				background: black !important;
+				color: white;
+				text-shadow: 0 0 10px gray;
+				border: 7px solid #ffc1fa;
+			}
+			.stateCount{
+				position: absolute;
+				right: 0.5rem;
+				top: 0.2rem;
+				font-size: 2rem !important;
+			}
+			.noStates{
+				cursor: not-allowed;
+				color: gray;
+				opacity : 0.75;
+			}
+			.noStates:hover{
+				opacity : 0.1;
+			}
+			.statesContainer{
+				display: grid;
+				grid-template-columns: 2fr 1fr;
+			}
+			.stateDetails{
+				display: grid;
+				grid-template-columns: 2fr 1fr;
+				grid-template-columns: auto;
+				color: white;
+				cursor: pointer;
+			}
+			.stateName{
+				font-size: 2rem;
+				transition: 0.1s;
+				padding: 5px 1rem;
+				display: flex;
+				align-items: center;
+				height: 7rem !important;
+			}
+			.stateName:hover{
+				font-size: 2.5rem;
+				text-shadow: 0 0 10px black;
+				font-weight: bold;
+			}
+			.stateCapital{
+				font-size: 1rem;
+			}
+			.modal-dialog{
+				margin: auto 10vw;
+			}
+			.modal-content{
+				width: 80vw !important;
+				margin: 1rem auto !important;
+			}
+
+			#closeModal{
+				background: red;
+				border-radius: 500px;
+				color: white;
+				text-shadow: black;
+				margin: 2rem 5rem;
+				transition: 0.5s;
+				padding: 1rem;
+			}
+
+			#closeModal:hover{
+				background: black;
+			}
+
+			@media screen and (max-width: 992px) {
+				.modal-dialog{
+					margin: auto 3vw;
+				}
+				.modal-content{
+					width: 94vw !important;
+				}
+
+				.statesContainer{
+					display: block !important;
+				}
+			}
+
+
+			
+		</style>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+		<script src="src/angularjs/angular.min.js"></script>
+		<script src="app/states.js"></script>
+		<script src="app/app.js"></script>
+	</head>
+	<body ng-app="myApp" ng-controller="appCtrl">
+		<div id="watermark">
+			<img src="src/img/author.jpg" alt="">
+			<span>
+				Developed by <strong>Shalem Raj V</strong>
+			</span>
+		</div>
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand">
+				<h3 class="text-center ml-2 mt-2">
+					<img id="flagHeader" src="src/img/badgeIndia.png"/>
+					&nbsp; States of India
+				</h3>
+			</a>
+			<img class="headerImg" src="src/img/header.jpg">
+		</nav>
+
+		<div id="mainBody" class="text-center mt-4 mx-2">
+			<div
+				ng-repeat="(alpha, statesList) in statesDataset"
+				ng-click="assignStatesList(statesList)"
+				class="alphaCard"
+				ng-class="{
+					'alphaCardHover': (statesList.length>0),
+					'noStates' 		: (statesList.length==0),
+					'bg-primary' 	: ($index % 5==0),
+					'bg-secondary' 	: ($index % 5==1),
+					'bg-success' 	: ($index % 5==2),
+					'bg-danger' 	: ($index % 5==3),
+					'bg-info' 		: ($index % 5==4)
+				}"
+			>
+				{{alpha}}
+				<span class="stateCount" ng-if="statesList.length" ng-bind="statesList.length"></span>
+			</div>
+		</div>
+
+		<div class="modal fade in" id="statesListModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 1rem 0;">
+						<div id="closeModal" class="text-center" data-dismiss="modal">CLOSE</div>
+						<div class="statesContainer">
+							<div>								
+								<div class="stateDetails" ng-repeat="state in showingStates | orderBy : 'name'">
+									<div
+										class="stateName"
+										ng-class="{
+											'bg-primary' 	: ($index % 5==0),
+											'bg-danger' 	: ($index % 5==1),
+											'bg-success' 	: ($index % 5==2),
+											'bg-secondary' 	: ($index % 5==3),
+											'bg-info' 		: ($index % 5==4)
+										}"
+										ng-click="playStateName(state)"
+									>
+										<span>
+											{{$index + 1}}.
+											&nbsp;
+											{{state.name}}
+											<audio id="{{state.media}}" ng-src="src/states/{{state.media}}.mp3"></audio>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div ng-if="selectedStateName.length">
+								<img ng-src="src/states/{{selectedStateName}}.jpg" alt="No State" style="width: 100%;">
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
